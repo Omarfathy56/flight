@@ -1,0 +1,3945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flivain · Luxury Flight & Travel Booking Portal</title>
+  <meta name="description" content="Discover and book ultra-luxury flight experiences worldwide. Guaranteed best fares, VIP airport lounges, 24/7 dedicated travel concierge, and handpicked boutique stays.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & CSS VARIABLES
+       ========================================================================== */
+    :root {
+      --bg-primary: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --text-light: #94A3B8;
+      --brand-primary: #1E40AF;
+      --brand-primary-hover: #1D4ED8;
+      --brand-light: #EFF6FF;
+      --brand-accent: #38BDF8;
+      --brand-accent-glow: rgba(56, 189, 248, 0.35);
+      --border-subtle: rgba(226, 232, 240, 0.8);
+      --border-strong: #CBD5E1;
+      --glass-bg: rgba(255, 255, 255, 0.90);
+      --glass-border: rgba(255, 255, 255, 0.7);
+      --shadow-subtle: 0 10px 30px -10px rgba(15, 23, 42, 0.05);
+      --shadow-card: 0 20px 40px -15px rgba(0, 0, 0, 0.06);
+      --shadow-floating: 0 25px 50px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(226, 232, 240, 0.8);
+      --shadow-hover: 0 30px 60px -15px rgba(15, 23, 42, 0.15);
+      --pill-radius: 9999px;
+      --stadium-radius: 9999px;
+      --card-radius: 28px;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    /* Reset & Core Setup */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      overflow-x: hidden;
+      line-height: 1.6;
+      background: var(--bg-primary);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    button, input, select {
+      font-family: inherit;
+      border: none;
+      outline: none;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Container Utility */
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    /* Typography Utilities */
+    .section-eyebrow {
+      letter-spacing: 0.16em;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--brand-primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      background: var(--brand-light);
+      padding: 0.4rem 1rem;
+      border-radius: var(--pill-radius);
+    }
+
+    .section-eyebrow .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--brand-accent);
+      box-shadow: 0 0 8px var(--brand-accent);
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      color: var(--text-main);
+      line-height: 1.15;
+      text-transform: uppercase;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 580px;
+      margin-top: 0.75rem;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .center-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ==========================================================================
+       NAVIGATION BAR
+       ========================================================================== */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: var(--transition);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.03em;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #1E40AF 0%, #2563EB 60%, #38BDF8 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(30, 64, 175, 0.25);
+    }
+
+    .brand-logo span.dot {
+      color: var(--brand-accent);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(241, 245, 249, 0.7);
+      padding: 0.35rem 0.5rem;
+      border-radius: var(--pill-radius);
+      border: 1px solid rgba(226, 232, 240, 0.6);
+    }
+
+    .nav-link {
+      padding: 0.5rem 1.15rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: var(--pill-radius);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--text-main);
+    }
+
+    .nav-link.active {
+      color: var(--text-main);
+      background: var(--bg-surface);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-bookings-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--brand-light);
+      color: var(--brand-primary);
+      padding: 0.55rem 1.1rem;
+      border-radius: var(--pill-radius);
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 1px solid rgba(30, 64, 175, 0.15);
+      transition: var(--transition);
+    }
+
+    .btn-bookings-pill:hover {
+      background: #DBEAFE;
+      transform: translateY(-1px);
+    }
+
+    .bookings-count-badge {
+      background: var(--brand-primary);
+      color: #FFFFFF;
+      font-size: 0.72rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 9999px;
+      font-weight: 800;
+    }
+
+    .currency-selector {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: transparent;
+      padding: 0.5rem 0.85rem;
+      border-radius: var(--pill-radius);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+      transition: var(--transition);
+    }
+
+    .currency-selector:hover {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      border-color: var(--border-strong);
+    }
+
+    .btn-dark-pill {
+      background: var(--text-main);
+      color: #FFFFFF;
+      padding: 0.65rem 1.5rem;
+      border-radius: var(--pill-radius);
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-dark-pill:hover {
+      background: #1E293B;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      padding: 0.5rem;
+      color: var(--text-main);
+    }
+
+    /* ==========================================================================
+       HERO SECTION & STADIUM AIRPLANE ILLUSION
+       ========================================================================== */
+    .hero-section {
+      padding-top: 3.5rem;
+      padding-bottom: 2rem;
+      position: relative;
+      overflow: visible;
+    }
+
+    .hero-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      letter-spacing: 0.18em;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+      background: var(--bg-surface);
+      padding: 0.45rem 1.25rem;
+      border-radius: var(--pill-radius);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .hero-eyebrow .plane-ico {
+      color: var(--brand-primary);
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      color: var(--text-main);
+      line-height: 1.08;
+      text-transform: uppercase;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-top: 1.25rem;
+      max-width: 650px;
+      font-weight: 400;
+    }
+
+    /* Stadium Capsule Airplane Visual Illusion */
+    .hero-visual-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 1050px;
+      margin: 2rem auto 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-stadium-canvas {
+      position: relative;
+      width: 100%;
+      max-width: 980px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-airplane-img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 35px 45px rgba(15, 23, 42, 0.14));
+      animation: heroAirplaneFloat 6s ease-in-out infinite alternate;
+      transform-origin: center center;
+    }
+
+    @keyframes heroAirplaneFloat {
+      0% {
+        transform: translateY(0px) scale(1);
+      }
+      50% {
+        transform: translateY(-12px) scale(1.012);
+      }
+      100% {
+        transform: translateY(0px) scale(1);
+      }
+    }
+
+    /* Floating Interactive Hero Badges */
+    .hero-badge-pill {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      padding: 0.65rem 1.2rem;
+      border-radius: var(--pill-radius);
+      box-shadow: 0 15px 30px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(226, 232, 240, 0.8);
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      z-index: 5;
+      animation: badgeFloat 4s ease-in-out infinite alternate;
+    }
+
+    .hero-badge-left {
+      top: 15%;
+      left: -20px;
+      animation-delay: 0.5s;
+    }
+
+    .hero-badge-right {
+      top: 25%;
+      right: -20px;
+      animation-delay: 1.5s;
+    }
+
+    @keyframes badgeFloat {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
+
+    .badge-icon-wrap {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--brand-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-primary);
+    }
+
+    /* ==========================================================================
+       GLASSMORFHIC FLOATING FLIGHT SEARCH ENGINE WIDGET
+       ========================================================================== */
+    .search-engine-outer {
+      position: relative;
+      z-index: 20;
+      margin-top: -3.5rem;
+      margin-bottom: 5rem;
+    }
+
+    .search-widget {
+      background: var(--glass-bg);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-radius: 36px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-floating);
+      padding: 1.85rem 2rem;
+      transition: var(--transition);
+    }
+
+    .search-widget:hover {
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(37, 99, 235, 0.3);
+    }
+
+    /* Segmented Controls (Trip Type & Cabin Class) */
+    .widget-tabs-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+    }
+
+    .segmented-pills {
+      display: inline-flex;
+      align-items: center;
+      background: #F1F5F9;
+      padding: 0.3rem 0.4rem;
+      border-radius: var(--pill-radius);
+      gap: 0.25rem;
+    }
+
+    .seg-btn {
+      background: transparent;
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--pill-radius);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+
+    .seg-btn:hover {
+      color: var(--text-main);
+    }
+
+    .seg-btn.active {
+      background: var(--brand-accent);
+      color: #0F172A;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.35);
+    }
+
+    .class-pills {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .class-btn {
+      background: transparent;
+      padding: 0.45rem 1.1rem;
+      border-radius: var(--pill-radius);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: var(--transition);
+    }
+
+    .class-btn:hover {
+      border-color: var(--border-strong);
+      color: var(--text-main);
+    }
+
+    .class-btn.active {
+      background: var(--brand-light);
+      color: var(--brand-primary);
+      border-color: rgba(30, 64, 175, 0.2);
+    }
+
+    /* Grid of Search Inputs */
+    .search-inputs-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 46px 1.15fr 1fr 1fr 1.1fr auto;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .input-cell {
+      position: relative;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 0.85rem 1.15rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .input-cell:hover {
+      border-color: var(--border-focus);
+      background: #FAFCFF;
+      transform: translateY(-1px);
+    }
+
+    .input-label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .input-value {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+
+    .input-code {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--brand-primary);
+      background: var(--brand-light);
+      padding: 0.1rem 0.4rem;
+      border-radius: 6px;
+    }
+
+    .input-subtext {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      font-weight: 500;
+      margin-top: 0.15rem;
+    }
+
+    /* Swap Button */
+    .swap-btn-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .swap-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+      transition: var(--transition);
+    }
+
+    .swap-btn:hover {
+      background: var(--brand-light);
+      color: var(--brand-primary);
+      border-color: var(--brand-primary);
+      transform: rotate(180deg) scale(1.08);
+    }
+
+    /* Primary Search Action Button */
+    .search-cta-btn {
+      background: linear-gradient(135deg, #38BDF8 0%, #2563EB 50%, #1E40AF 100%);
+      color: #FFFFFF;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 28px rgba(37, 99, 235, 0.4);
+      transition: var(--transition);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .search-cta-btn:hover {
+      transform: scale(1.08) translateY(-2px);
+      box-shadow: 0 16px 36px rgba(37, 99, 235, 0.55);
+    }
+
+    .search-cta-btn svg {
+      width: 26px;
+      height: 26px;
+      transition: var(--transition);
+    }
+
+    /* Trending Searches strip */
+    .trending-strip {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+
+    .trending-label {
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .trend-tag {
+      background: #F1F5F9;
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--pill-radius);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+
+    .trend-tag:hover {
+      background: var(--brand-light);
+      color: var(--brand-primary);
+      border-color: rgba(30, 64, 175, 0.2);
+    }
+
+    /* Popovers */
+    .dropdown-popover {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: 310px;
+      background: var(--bg-surface);
+      border-radius: 20px;
+      box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.2), 0 0 0 1px var(--border-subtle);
+      padding: 1rem;
+      z-index: 50;
+      display: none;
+      animation: popoverFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .dropdown-popover.open {
+      display: block;
+    }
+
+    @keyframes popoverFadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .popover-search-input {
+      width: 100%;
+      padding: 0.6rem 0.85rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+      background: #F8FAFC;
+    }
+
+    .popover-search-input:focus {
+      border-color: var(--brand-primary);
+      background: #FFFFFF;
+    }
+
+    .airport-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.55rem 0.75rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .airport-item:hover {
+      background: var(--brand-light);
+    }
+
+    .airport-item .city {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    .airport-item .sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .airport-item .iata {
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--brand-primary);
+      background: rgba(30, 64, 175, 0.1);
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+    }
+
+    /* Stepper Counter in Travelers Popover */
+    .stepper-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .stepper-row:last-child {
+      border-bottom: none;
+    }
+
+    .stepper-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .step-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #F1F5F9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--text-main);
+      transition: var(--transition);
+    }
+
+    .step-btn:hover {
+      background: var(--brand-primary);
+      color: #FFFFFF;
+    }
+
+    /* ==========================================================================
+       SECTION: TOP FLIGHT DEALS (FEATURED DEALS)
+       ========================================================================== */
+    .deals-section {
+      padding: 4rem 0 6rem;
+    }
+
+    .deals-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr 1fr;
+      gap: 1.75rem;
+      align-items: stretch;
+    }
+
+    .deal-card {
+      background: var(--bg-surface);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .deal-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(30, 64, 175, 0.15);
+    }
+
+    /* Card 1: Cabin Interior Feature */
+    .deal-card-cabin {
+      display: flex;
+      flex-direction: row;
+      background: var(--bg-surface);
+    }
+
+    .cabin-img-side {
+      width: 46%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cabin-img-side img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .deal-card:hover .cabin-img-side img {
+      transform: scale(1.08);
+    }
+
+    .cabin-content-side {
+      width: 54%;
+      padding: 2.25rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-meta-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .deal-card-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text-main);
+      line-height: 1.25;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .deal-card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-outline-pill {
+      align-self: flex-start;
+      background: var(--brand-light);
+      color: var(--brand-primary);
+      padding: 0.6rem 1.4rem;
+      border-radius: var(--pill-radius);
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 1px solid rgba(30, 64, 175, 0.2);
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-outline-pill:hover {
+      background: var(--brand-primary);
+      color: #FFFFFF;
+      transform: translateY(-2px);
+    }
+
+    /* Cards 2 & 3: Architectural Seaside Resort & Domestic Stays */
+    .deal-card-visual {
+      position: relative;
+      height: 380px;
+      overflow: hidden;
+    }
+
+    .deal-card-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .deal-card:hover .deal-card-visual img {
+      transform: scale(1.08);
+    }
+
+    .card-stadium-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.05) 0%, rgba(15, 23, 42, 0.65) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.75rem;
+    }
+
+    .card-pill-badge {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      padding: 0.4rem 1rem;
+      border-radius: var(--pill-radius);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-footer-info {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .card-footer-text h3 {
+      color: #FFFFFF;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .card-footer-text p {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-top: 0.2rem;
+    }
+
+    .card-arrow-action {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--brand-accent);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      box-shadow: 0 8px 20px rgba(56, 189, 248, 0.4);
+      flex-shrink: 0;
+    }
+
+    .deal-card:hover .card-arrow-action {
+      background: #FFFFFF;
+      color: var(--brand-primary);
+      transform: scale(1.1) rotate(45deg);
+    }
+
+    /* ==========================================================================
+       SECTION: MOST POPULAR AIRLINES
+       ========================================================================== */
+    .airlines-section {
+      padding: 3rem 0 6rem;
+      background: #F1F5F9;
+      position: relative;
+    }
+
+    .airlines-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .airline-card {
+      background: var(--bg-surface);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .airline-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .airline-card.featured-elevated {
+      transform: scale(1.04);
+      border: 2px solid var(--brand-accent);
+      box-shadow: 0 25px 50px -10px rgba(37, 99, 235, 0.22);
+      z-index: 2;
+    }
+
+    .airline-card.featured-elevated:hover {
+      transform: scale(1.06) translateY(-8px);
+    }
+
+    .airline-photo-wrap {
+      height: 220px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .airline-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .airline-card:hover .airline-photo-wrap img {
+      transform: scale(1.08);
+    }
+
+    .airline-floating-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      color: #FFFFFF;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--pill-radius);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .airline-card.featured-elevated .airline-floating-badge {
+      background: linear-gradient(135deg, #1E40AF, #2563EB);
+      color: #FFFFFF;
+    }
+
+    .airline-info-bar {
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-surface);
+    }
+
+    .airline-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--text-main);
+    }
+
+    .airline-subtag {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .airline-action-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #F1F5F9;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .airline-card.featured-elevated .airline-action-btn {
+      background: var(--brand-accent);
+      color: var(--text-main);
+      box-shadow: 0 4px 14px rgba(56, 189, 248, 0.4);
+    }
+
+    .airline-card:hover .airline-action-btn {
+      background: var(--brand-primary);
+      color: #FFFFFF;
+      transform: rotate(45deg);
+    }
+
+    /* ==========================================================================
+       SECTION: PLAN YOUR TRAVEL WITH CONFIDENCE (COLLAGE SECTION)
+       ========================================================================== */
+    .support-section {
+      padding: 6rem 0;
+      position: relative;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4.5rem;
+      align-items: center;
+    }
+
+    .support-content {
+      padding-right: 1.5rem;
+    }
+
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 2.75rem;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.4rem;
+      position: relative;
+    }
+
+    .feature-num-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--brand-light);
+      color: var(--brand-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+      border: 1px solid rgba(30, 64, 175, 0.15);
+      transition: var(--transition);
+    }
+
+    .feature-item:nth-child(2) .feature-num-badge {
+      background: #FFF7ED;
+      color: #EA580C;
+      border-color: rgba(234, 88, 12, 0.15);
+    }
+
+    .feature-item:nth-child(3) .feature-num-badge {
+      background: #ECFDF5;
+      color: #059669;
+      border-color: rgba(5, 150, 105, 0.15);
+    }
+
+    .feature-item:hover .feature-num-badge {
+      transform: scale(1.1);
+    }
+
+    .feature-item h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+    }
+
+    .feature-item p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* Signature Stadium Capsule Collage */
+    .capsule-collage-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 480px;
+    }
+
+    .capsule-pill {
+      position: absolute;
+      border-radius: var(--stadium-radius);
+      overflow: hidden;
+      box-shadow: 0 25px 45px -10px rgba(15, 23, 42, 0.15);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 5px solid #FFFFFF;
+    }
+
+    .capsule-pill img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .capsule-pill:hover {
+      transform: translateY(-8px) scale(1.03);
+      z-index: 10 !important;
+    }
+
+    .capsule-pill:hover img {
+      transform: scale(1.12);
+    }
+
+    .capsule-1 {
+      width: 175px;
+      height: 330px;
+      top: 0;
+      right: 40px;
+      z-index: 1;
+    }
+
+    .capsule-2 {
+      width: 210px;
+      height: 290px;
+      bottom: 25px;
+      left: 30px;
+      z-index: 2;
+    }
+
+    .capsule-3 {
+      width: 165px;
+      height: 250px;
+      bottom: 0;
+      right: 130px;
+      z-index: 3;
+    }
+
+    .floating-trust-pill {
+      position: absolute;
+      top: 45%;
+      left: -15px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      padding: 0.75rem 1.35rem;
+      border-radius: var(--pill-radius);
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.1), 0 0 0 1px var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      z-index: 8;
+      animation: badgeFloat 4s ease-in-out infinite alternate;
+    }
+
+    .floating-trust-pill .trust-stars {
+      color: #F59E0B;
+      font-size: 0.9rem;
+    }
+
+    /* ==========================================================================
+       SECTION: TRAVEL TO MAKE MEMORIES (3 VALUE PILLARS)
+       ========================================================================== */
+    .memories-section {
+      padding: 5rem 0 6rem;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .memories-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.25rem;
+      margin-top: 3.5rem;
+    }
+
+    .memory-card {
+      background: #F8FAFC;
+      border-radius: 36px;
+      padding: 3rem 2.25rem;
+      text-align: center;
+      border: 1px solid var(--border-subtle);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .memory-card:hover {
+      background: #FFFFFF;
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-card);
+      border-color: rgba(30, 64, 175, 0.2);
+    }
+
+    .memory-icon-wrap {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.75rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      transition: var(--transition);
+    }
+
+    .memory-card:nth-child(1) .memory-icon-wrap {
+      background: #EFF6FF;
+      color: #1E40AF;
+    }
+
+    .memory-card:nth-child(2) .memory-icon-wrap {
+      background: #FFF7ED;
+      color: #EA580C;
+    }
+
+    .memory-card:nth-child(3) .memory-icon-wrap {
+      background: #FEF3C7;
+      color: #D97706;
+    }
+
+    .memory-card:hover .memory-icon-wrap {
+      transform: scale(1.15) rotate(5deg);
+    }
+
+    .memory-card h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+    }
+
+    .memory-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ==========================================================================
+       SECTION: BOOK YOUR HOTEL (LUXURY STAYS)
+       ========================================================================== */
+    .hotels-section {
+      padding: 6rem 0;
+    }
+
+    .hotels-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .hotel-card {
+      background: var(--bg-surface);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hotel-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .hotel-img-wrap {
+      position: relative;
+      height: 250px;
+      overflow: hidden;
+    }
+
+    .hotel-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hotel-card:hover .hotel-img-wrap img {
+      transform: scale(1.08);
+    }
+
+    .hotel-heart-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .hotel-heart-btn:hover {
+      transform: scale(1.15);
+      color: #EF4444;
+    }
+
+    .hotel-heart-btn.liked {
+      color: #EF4444;
+      background: #FFFFFF;
+    }
+
+    .hotel-rating-badge {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(10px);
+      color: #FFFFFF;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--pill-radius);
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .hotel-rating-badge span.star {
+      color: #F59E0B;
+    }
+
+    .hotel-info-body {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .hotel-location {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--brand-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+
+    .hotel-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      margin-bottom: 0.75rem;
+    }
+
+    .hotel-amenities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .amenity-pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: #F1F5F9;
+      color: var(--text-muted);
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--pill-radius);
+    }
+
+    .hotel-bottom-bar {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .hotel-price {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .hotel-price span {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .btn-book-room {
+      background: var(--text-main);
+      color: #FFFFFF;
+      padding: 0.55rem 1.25rem;
+      border-radius: var(--pill-radius);
+      font-size: 0.85rem;
+      font-weight: 700;
+      transition: var(--transition);
+    }
+
+    .btn-book-room:hover {
+      background: var(--brand-primary);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       SECTION: TOP DESTINATIONS OF THE MONTH
+       ========================================================================== */
+    .destinations-section {
+      padding: 3rem 0 6rem;
+      background: #F1F5F9;
+    }
+
+    .destinations-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .destination-pill-card {
+      background: var(--bg-surface);
+      border-radius: 32px;
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      border: 1px solid var(--border-subtle);
+      transition: var(--transition);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .destination-pill-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--brand-primary);
+    }
+
+    .destination-avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+      border: 4px solid var(--bg-primary);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+      transition: var(--transition);
+    }
+
+    .destination-pill-card:hover .destination-avatar {
+      transform: scale(1.08);
+    }
+
+    .destination-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .dest-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .dest-price {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--brand-primary);
+      margin-top: 0.25rem;
+    }
+
+    .dest-tag {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* ==========================================================================
+       SECTION: NEWSLETTER SUBSCRIPTION (STADIUM BANNER)
+       ========================================================================== */
+    .newsletter-section {
+      padding: 3rem 0 6rem;
+      position: relative;
+    }
+
+    .newsletter-stadium-box {
+      background: linear-gradient(135deg, #0B1120 0%, #1E293B 100%);
+      border-radius: 44px;
+      padding: 4.5rem 3.5rem;
+      color: #FFFFFF;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 60px -15px rgba(15, 23, 42, 0.35);
+    }
+
+    .newsletter-stadium-box::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -20%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .newsletter-stadium-box::after {
+      content: '';
+      position: absolute;
+      bottom: -40%;
+      right: -10%;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .newsletter-title {
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+    }
+
+    .newsletter-subtitle {
+      font-size: 1.05rem;
+      color: #94A3B8;
+      max-width: 540px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .newsletter-form {
+      max-width: 520px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      padding: 0.45rem 0.55rem;
+      border-radius: var(--pill-radius);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: var(--transition);
+    }
+
+    .newsletter-form:focus-within {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: var(--brand-accent);
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.2);
+    }
+
+    .newsletter-input {
+      flex: 1;
+      background: transparent;
+      padding: 0.75rem 1.25rem;
+      color: #FFFFFF;
+      font-size: 0.95rem;
+    }
+
+    .newsletter-input::placeholder {
+      color: #94A3B8;
+    }
+
+    .btn-newsletter-submit {
+      background: var(--brand-accent);
+      color: #0F172A;
+      font-weight: 800;
+      padding: 0.8rem 1.8rem;
+      border-radius: var(--pill-radius);
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .btn-newsletter-submit:hover {
+      background: #FFFFFF;
+      transform: scale(1.04);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+    }
+
+    /* ==========================================================================
+       MULTI-COLUMN FOOTER
+       ========================================================================== */
+    .site-footer {
+      background: #FFFFFF;
+      border-top: 1px solid var(--border-subtle);
+      padding: 5rem 0 2.5rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      max-width: 300px;
+      line-height: 1.6;
+    }
+
+    .footer-col-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-link-item a {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+
+    .footer-link-item a:hover {
+      color: var(--brand-primary);
+      padding-left: 4px;
+    }
+
+    .footer-bottom-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 2.25rem;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .system-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #F1F5F9;
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--pill-radius);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 8px #10B981;
+    }
+
+    /* ==========================================================================
+       SIMULATED LIVE FLIGHT SEARCH DRAWER / MODAL
+       ========================================================================== */
+    .flight-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(12px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .flight-modal-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .flight-modal-container {
+      background: #FFFFFF;
+      width: 100%;
+      max-width: 880px;
+      max-height: 90vh;
+      border-radius: 36px;
+      overflow-y: auto;
+      box-shadow: 0 35px 70px -15px rgba(15, 23, 42, 0.4);
+      padding: 2.5rem;
+      position: relative;
+      animation: modalSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalSlideUp {
+      from { transform: translateY(30px) scale(0.97); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1.75rem;
+      right: 1.75rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #F1F5F9;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .modal-close-btn:hover {
+      background: #E2E8F0;
+      transform: rotate(90deg);
+    }
+
+    .flight-results-header {
+      margin-bottom: 2rem;
+    }
+
+    .flight-itinerary-card {
+      background: #F8FAFC;
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.25rem;
+      display: grid;
+      grid-template-columns: 1.2fr 2fr 1.2fr;
+      align-items: center;
+      gap: 1.5rem;
+      transition: var(--transition);
+    }
+
+    .flight-itinerary-card:hover {
+      background: #FFFFFF;
+      border-color: var(--brand-primary);
+      box-shadow: var(--shadow-card);
+      transform: translateY(-2px);
+    }
+
+    .airline-brand-tag {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .airline-code-pill {
+      background: var(--brand-light);
+      color: var(--brand-primary);
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 8px;
+    }
+
+    .flight-timeline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .time-block {
+      text-align: center;
+    }
+
+    .time-block .time {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .time-block .city-code {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .route-graphic {
+      flex: 1;
+      margin: 0 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .route-duration {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .route-line {
+      width: 100%;
+      height: 2px;
+      background: #CBD5E1;
+      position: relative;
+    }
+
+    .route-line::after {
+      content: '✈';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.85rem;
+      color: var(--brand-primary);
+      background: #F8FAFC;
+      padding: 0 0.25rem;
+    }
+
+    .flight-pricing-action {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+
+    .flight-price-val {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .btn-select-flight {
+      background: var(--brand-primary);
+      color: #FFFFFF;
+      padding: 0.6rem 1.4rem;
+      border-radius: var(--pill-radius);
+      font-size: 0.85rem;
+      font-weight: 700;
+      transition: var(--transition);
+    }
+
+    .btn-select-flight:hover {
+      background: var(--brand-primary-hover);
+      transform: scale(1.05);
+    }
+
+    /* ==========================================================================
+       STEP 2: BOOKING CHECKOUT FORM MODAL
+       ========================================================================== */
+    .checkout-modal-container {
+      background: #FFFFFF;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 36px;
+      box-shadow: 0 35px 70px -15px rgba(15, 23, 42, 0.4);
+      padding: 2.5rem;
+      position: relative;
+      animation: modalSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .booking-summary-pill {
+      background: var(--brand-light);
+      border: 1px solid rgba(30, 64, 175, 0.15);
+      border-radius: 20px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+
+    .summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-size: 0.88rem;
+    }
+
+    .summary-row:last-child {
+      margin-bottom: 0;
+      padding-top: 0.5rem;
+      border-top: 1px dashed rgba(30, 64, 175, 0.2);
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-input-text {
+      width: 100%;
+      padding: 0.85rem 1.15rem;
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      background: #F8FAFC;
+      transition: var(--transition);
+    }
+
+    .form-input-text:focus {
+      border-color: var(--brand-primary);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .btn-confirm-booking {
+      width: 100%;
+      background: linear-gradient(135deg, #1E40AF 0%, #2563EB 100%);
+      color: #FFFFFF;
+      padding: 1rem 1.5rem;
+      border-radius: var(--pill-radius);
+      font-size: 1rem;
+      font-weight: 800;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn-confirm-booking:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(37, 99, 235, 0.45);
+    }
+
+    /* ==========================================================================
+       STEP 3: SUCCESS BOARDING PASS MODAL
+       ========================================================================== */
+    .boarding-pass-card {
+      background: #FFFFFF;
+      border-radius: 28px;
+      border: 2px dashed #CBD5E1;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+
+    .pass-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 1.25rem;
+    }
+
+    .pnr-badge {
+      background: #0F172A;
+      color: #38BDF8;
+      padding: 0.4rem 1rem;
+      border-radius: var(--pill-radius);
+      font-family: monospace;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+
+    .pass-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+
+    .pass-field-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .pass-field-val {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-top: 0.15rem;
+    }
+
+    /* ==========================================================================
+       MY BOOKINGS DRAWER
+       ========================================================================== */
+    .bookings-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 250;
+      display: none;
+      justify-content: flex-end;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .bookings-drawer-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .bookings-drawer-panel {
+      width: 100%;
+      max-width: 500px;
+      height: 100%;
+      background: #FFFFFF;
+      box-shadow: -15px 0 45px rgba(0, 0, 0, 0.2);
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      animation: drawerSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes drawerSlideIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+
+    .drawer-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .booking-history-item {
+      background: #F8FAFC;
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      transition: var(--transition);
+    }
+
+    .booking-history-item:hover {
+      border-color: var(--brand-primary);
+      background: #FFFFFF;
+      box-shadow: var(--shadow-card);
+    }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none;
+    }
+
+    .toast-pill {
+      background: var(--text-main);
+      color: #FFFFFF;
+      padding: 0.85rem 1.6rem;
+      border-radius: var(--pill-radius);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      pointer-events: auto;
+      animation: toastIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes toastIn {
+      from { transform: translateY(20px) scale(0.9); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .search-inputs-grid {
+        grid-template-columns: 1fr 40px 1fr;
+        gap: 0.75rem;
+      }
+      .search-inputs-grid .input-cell:nth-child(4),
+      .search-inputs-grid .input-cell:nth-child(5),
+      .search-inputs-grid .input-cell:nth-child(6) {
+        grid-column: span 1;
+      }
+      .search-cta-btn {
+        grid-column: span 3;
+        width: 100%;
+        border-radius: var(--pill-radius);
+        height: 54px;
+        gap: 0.5rem;
+      }
+      .deals-grid {
+        grid-template-columns: 1fr;
+      }
+      .deal-card-cabin {
+        flex-direction: column;
+      }
+      .cabin-img-side {
+        width: 100%;
+        height: 250px;
+      }
+      .cabin-content-side {
+        width: 100%;
+      }
+      .airlines-grid {
+        grid-template-columns: 1fr;
+      }
+      .airline-card.featured-elevated {
+        transform: none;
+      }
+      .support-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .capsule-collage-wrap {
+        height: 420px;
+      }
+      .memories-grid, .hotels-grid {
+        grid-template-columns: 1fr;
+      }
+      .destinations-row {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links, .currency-selector {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .hero-badge-pill {
+        display: none;
+      }
+      .search-widget {
+        padding: 1.5rem 1.25rem;
+      }
+      .search-inputs-grid {
+        grid-template-columns: 1fr;
+      }
+      .swap-btn-wrap {
+        margin: -0.25rem 0;
+      }
+      .search-cta-btn {
+        grid-column: span 1;
+      }
+      .destinations-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .newsletter-stadium-box {
+        padding: 3rem 1.5rem;
+      }
+      .flight-itinerary-card {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        text-align: center;
+      }
+      .flight-pricing-action {
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       STICKY NAVIGATION BAR
+       ========================================================================== -->
+  <header class="site-nav">
+    <div class="container nav-inner">
+      <a href="#" class="brand-logo" aria-label="Flivain Homepage">
+        <div class="brand-icon">
+          <!-- Geometric Wing SVG -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"/>
+          </svg>
+        </div>
+        <span>Flivain<span class="dot">.</span></span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="#flights" class="nav-link active">Flights</a>
+        <a href="#hotels" class="nav-link">Hotels</a>
+        <a href="#deals" class="nav-link">Deals</a>
+        <a href="#support" class="nav-link">Support</a>
+        <a href="#destinations" class="nav-link">Destinations</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- My Bookings Drawer Button -->
+        <button class="btn-bookings-pill" id="openBookingsDrawerBtn" aria-label="View Saved Reservations">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          <span>My Bookings</span>
+          <span class="bookings-count-badge" id="navBookingsBadge">1</span>
+        </button>
+
+        <button class="currency-selector" id="currencyToggleBtn" aria-label="Change Currency">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span id="currentCurrency">USD ($)</span>
+        </button>
+
+        <a href="#searchWidget" class="btn-dark-pill">
+          <span>Book Ticket</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+
+        <button class="mobile-menu-btn" id="mobileMenuToggle" aria-label="Open Mobile Menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==========================================================================
+         HERO SECTION & STADIUM AIRPLANE ILLUSION
+         ========================================================================== -->
+    <section class="hero-section" id="flights">
+      <div class="container">
+        <div class="hero-header">
+          <div class="hero-eyebrow">
+            <span class="plane-ico">✈</span>
+            <span>READY TAKE-OFF</span>
+          </div>
+          <h1 class="hero-title">
+            CONVENIENT ONLINE<br>
+            FLIGHT BOOKING SERVICES
+          </h1>
+          <p class="hero-subtitle">
+            Find And Book A Great Experience. Elevate your journey with seamless reservations, verified route safety, and exclusive member fares on world-class airlines.
+          </p>
+        </div>
+
+        <!-- Visual Centerpiece: Stadium Airplane Breakout Illusion -->
+        <div class="hero-visual-wrapper">
+          <div class="hero-badge-pill hero-badge-left">
+            <div class="badge-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </div>
+            <div>
+              <div>5-Star Airline Fleet</div>
+              <small style="color: var(--text-muted); font-weight: 500;">99.8% On-Time Flights</small>
+            </div>
+          </div>
+
+          <div class="hero-badge-pill hero-badge-right">
+            <div class="badge-icon-wrap" style="background: #ECFDF5; color: #10B981;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <div>
+              <div>100% Refund Safe</div>
+              <small style="color: var(--text-muted); font-weight: 500;">Flexible Date Changes</small>
+            </div>
+          </div>
+
+          <!-- Stadium Canvas with Airplane Breakout -->
+          <div class="hero-stadium-canvas">
+            <img src="assets/images/hero_stadium_airplane_transparent.png" 
+                 alt="Commercial airliner breaking out of stadium capsule frame with clouds and sky" 
+                 class="hero-airplane-img"
+                 onerror="this.src='assets/images/hero_stadium_airplane.jpg'">
+          </div>
+        </div>
+
+        <!-- ==========================================================================
+             GLASSMORFHIC FLOATING FLIGHT SEARCH ENGINE WIDGET
+             ========================================================================== -->
+        <div class="search-engine-outer" id="searchWidget">
+          <div class="search-widget">
+            <div class="widget-tabs-row">
+              <div class="segmented-pills" role="tablist">
+                <button class="seg-btn active" data-trip="roundtrip" role="tab" aria-selected="true">Round Trip</button>
+                <button class="seg-btn" data-trip="oneway" role="tab" aria-selected="false">One Way</button>
+                <button class="seg-btn" data-trip="multicity" role="tab" aria-selected="false">Multi-City</button>
+              </div>
+
+              <div class="class-pills">
+                <button class="class-btn active" data-class="Economy">Economy</button>
+                <button class="class-btn" data-class="Business">Business Class</button>
+                <button class="class-btn" data-class="First">First Class</button>
+              </div>
+            </div>
+
+            <!-- Inputs Grid -->
+            <div class="search-inputs-grid">
+              <!-- Origin Cell -->
+              <div class="input-cell" id="originCell" tabindex="0">
+                <div class="input-label">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <span>From</span>
+                </div>
+                <div class="input-value">
+                  <span id="originCity">Tokyo, Japan</span>
+                  <span class="input-code" id="originCode">HND</span>
+                </div>
+                <div class="input-subtext">Haneda International</div>
+
+                <div class="dropdown-popover" id="originPopover">
+                  <input type="text" class="popover-search-input" placeholder="Search departure city or code..." id="originSearch">
+                  <div class="airport-item" data-city="Tokyo, Japan" data-code="HND" data-airport="Haneda Airport">
+                    <div><div class="city">Tokyo, Japan</div><div class="sub">Haneda Int'l Airport</div></div>
+                    <div class="iata">HND</div>
+                  </div>
+                  <div class="airport-item" data-city="New York, USA" data-code="JFK" data-airport="John F. Kennedy">
+                    <div><div class="city">New York, USA</div><div class="sub">JFK International</div></div>
+                    <div class="iata">JFK</div>
+                  </div>
+                  <div class="airport-item" data-city="London, UK" data-code="LHR" data-airport="Heathrow Airport">
+                    <div><div class="city">London, UK</div><div class="sub">Heathrow Terminal 5</div></div>
+                    <div class="iata">LHR</div>
+                  </div>
+                  <div class="airport-item" data-city="Dubai, UAE" data-code="DXB" data-airport="Dubai International">
+                    <div><div class="city">Dubai, UAE</div><div class="sub">Dubai World Central</div></div>
+                    <div class="iata">DXB</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Swap Button -->
+              <div class="swap-btn-wrap">
+                <button class="swap-btn" id="swapAirportsBtn" title="Swap Departure and Destination" aria-label="Swap Airports">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m16 3 4 4-4 4"></path>
+                    <path d="M20 7H4"></path>
+                    <path d="m8 21-4-4 4-4"></path>
+                    <path d="M4 17h16"></path>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Destination Cell -->
+              <div class="input-cell" id="destCell" tabindex="0">
+                <div class="input-label">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <span>To</span>
+                </div>
+                <div class="input-value">
+                  <span id="destCity">Berlin, Germany</span>
+                  <span class="input-code" id="destCode">BER</span>
+                </div>
+                <div class="input-subtext">Brandenburg Airport</div>
+
+                <div class="dropdown-popover" id="destPopover">
+                  <input type="text" class="popover-search-input" placeholder="Search arrival city or code..." id="destSearch">
+                  <div class="airport-item" data-city="Berlin, Germany" data-code="BER" data-airport="Brandenburg">
+                    <div><div class="city">Berlin, Germany</div><div class="sub">Brandenburg Terminal 1</div></div>
+                    <div class="iata">BER</div>
+                  </div>
+                  <div class="airport-item" data-city="Paris, France" data-code="CDG" data-airport="Charles de Gaulle">
+                    <div><div class="city">Paris, France</div><div class="sub">Roissy Charles de Gaulle</div></div>
+                    <div class="iata">CDG</div>
+                  </div>
+                  <div class="airport-item" data-city="Singapore" data-code="SIN" data-airport="Changi Airport">
+                    <div><div class="city">Singapore</div><div class="sub">Singapore Changi Jewel</div></div>
+                    <div class="iata">SIN</div>
+                  </div>
+                  <div class="airport-item" data-city="Rome, Italy" data-code="FCO" data-airport="Fiumicino">
+                    <div><div class="city">Rome, Italy</div><div class="sub">Leonardo da Vinci Airport</div></div>
+                    <div class="iata">FCO</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Departure Date Cell -->
+              <div class="input-cell" id="depDateCell" tabindex="0">
+                <div class="input-label">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                  <span>Departure</span>
+                </div>
+                <div class="input-value" id="depDateVal">Oct 18, 2026</div>
+                <div class="input-subtext">Sunday · Morning flight</div>
+              </div>
+
+              <!-- Return Date Cell -->
+              <div class="input-cell" id="retDateCell" tabindex="0">
+                <div class="input-label">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                  <span>Return</span>
+                </div>
+                <div class="input-value" id="retDateVal">Dec 15, 2026</div>
+                <div class="input-subtext" id="retDateSub">Tuesday · Flexible return</div>
+              </div>
+
+              <!-- Travelers & Class Cell -->
+              <div class="input-cell" id="travelersCell" tabindex="0">
+                <div class="input-label">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                  <span>Travelers</span>
+                </div>
+                <div class="input-value" id="travelersVal">1 Adult, Economy</div>
+                <div class="input-subtext">Tap to configure passengers</div>
+
+                <div class="dropdown-popover" id="travelersPopover" style="width: 270px;">
+                  <div class="stepper-row">
+                    <div>
+                      <div style="font-weight: 700; font-size: 0.9rem;">Adults</div>
+                      <small style="color: var(--text-muted);">Age 12+</small>
+                    </div>
+                    <div class="stepper-controls">
+                      <button class="step-btn" id="adultDec">−</button>
+                      <span id="adultCount" style="font-weight: 700; width: 18px; text-align: center;">1</span>
+                      <button class="step-btn" id="adultInc">+</button>
+                    </div>
+                  </div>
+                  <div class="stepper-row">
+                    <div>
+                      <div style="font-weight: 700; font-size: 0.9rem;">Children</div>
+                      <small style="color: var(--text-muted);">Age 2-11</small>
+                    </div>
+                    <div class="stepper-controls">
+                      <button class="step-btn" id="childDec">−</button>
+                      <span id="childCount" style="font-weight: 700; width: 18px; text-align: center;">0</span>
+                      <button class="step-btn" id="childInc">+</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Search Action Button -->
+              <button class="search-cta-btn" id="searchFlightsBtn" aria-label="Search Flights">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Trending Strip -->
+            <div class="trending-strip">
+              <span class="trending-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                  <polyline points="17 6 23 6 23 12"></polyline>
+                </svg>
+                Popular Routes:
+              </span>
+              <span class="trend-tag" onclick="quickSetRoute('Tokyo, Japan', 'HND', 'Paris, France', 'CDG')">Tokyo ➔ Paris</span>
+              <span class="trend-tag" onclick="quickSetRoute('London, UK', 'LHR', 'Dubai, UAE', 'DXB')">London ➔ Dubai</span>
+              <span class="trend-tag" onclick="quickSetRoute('New York, USA', 'JFK', 'Berlin, Germany', 'BER')">New York ➔ Berlin</span>
+              <span class="trend-tag" onclick="quickSetRoute('Singapore', 'SIN', 'Tokyo, Japan', 'HND')">Singapore ➔ Tokyo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION: TOP FLIGHT DEALS (FEATURED DEALS)
+         ========================================================================== -->
+    <section class="deals-section" id="deals">
+      <div class="container">
+        <div class="center-header">
+          <div class="section-eyebrow">
+            <span class="dot"></span>
+            <span>EXCLUSIVE CURATION</span>
+          </div>
+          <h2 class="section-title">TOP FLIGHT DEALS</h2>
+          <p class="section-subtitle">
+            Discover top flight deals for elite travel experiences at unprecedented prices.
+          </p>
+        </div>
+
+        <div class="deals-grid">
+          <!-- Card 1: Luxury Travel Cabin View -->
+          <div class="deal-card deal-card-cabin">
+            <div class="cabin-img-side">
+              <img src="assets/images/cabin_interior.jpg" alt="First class airplane cabin aisle with mood lighting" loading="lazy">
+            </div>
+            <div class="cabin-content-side">
+              <div>
+                <div class="card-meta-tag">01 TOUR 2026</div>
+                <h3 class="deal-card-title">LUXURY TRAVEL AND AIRLINES</h3>
+                <p class="deal-card-desc">
+                  Luxury travel and airlines offer opulence, comfort, and exclusivity for discerning travellers with private suites, Michelin cuisine, and lay-flat bedding.
+                </p>
+              </div>
+              <button class="btn-outline-pill" onclick="openFlightResults()">
+                <span>Explore Fleet</span>
+                <span>→</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2: Seaside Resort / Hotel Bookings -->
+          <div class="deal-card">
+            <div class="deal-card-visual">
+              <img src="assets/images/resort_beach.jpg" alt="Luxury seaside architectural hotel resort" loading="lazy">
+              <div class="card-stadium-overlay">
+                <span class="card-pill-badge">HOTEL BOOKINGS</span>
+                <div class="card-footer-info">
+                  <div class="card-footer-text">
+                    <h3>AMALFI COASTLINE</h3>
+                    <p>From <span class="dyn-price" data-usd="340">$340</span> / night</p>
+                  </div>
+                  <div class="card-arrow-action" onclick="bookStayDirect('Amalfi Coastline Villa', '$340', 'Italy')">
+                    ↗
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Modern Glass Hotel / Domestic Bookings -->
+          <div class="deal-card">
+            <div class="deal-card-visual">
+              <img src="assets/images/hotel_modern.jpg" alt="Modern hotel architecture with infinity pool" loading="lazy">
+              <div class="card-stadium-overlay">
+                <span class="card-pill-badge">BOOK DOMESTIC</span>
+                <div class="card-footer-info">
+                  <div class="card-footer-text">
+                    <h3>KYOTO PAVILION</h3>
+                    <p>From <span class="dyn-price" data-usd="180">$180</span> / night</p>
+                  </div>
+                  <div class="card-arrow-action" onclick="bookStayDirect('Kyoto Grand Pavilion', '$180', 'Japan')">
+                    ↗
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION: MOST POPULAR AIRLINES
+         ========================================================================== -->
+    <section class="airlines-section">
+      <div class="container">
+        <div class="center-header">
+          <div class="section-eyebrow">
+            <span class="dot"></span>
+            <span>WORLD-CLASS FLEETS</span>
+          </div>
+          <h2 class="section-title">MOST POPULAR AIRLINES</h2>
+          <p class="section-subtitle">
+            The world's leading airlines offer top-notch service, ensuring memorable travel experiences for passengers.
+          </p>
+        </div>
+
+        <div class="airlines-grid">
+          <!-- Airline Card 1: Turkish Airlines -->
+          <div class="airline-card">
+            <div class="airline-photo-wrap">
+              <img src="assets/images/turkish_airline.jpg" alt="Turkish Airlines aircraft flying in blue sky" loading="lazy">
+              <div class="airline-floating-badge">★ 4.8 Rating</div>
+            </div>
+            <div class="airline-info-bar">
+              <div>
+                <h3 class="airline-name">TURKISH AIRLINES</h3>
+                <div class="airline-subtag">Widen Your World · 300+ Hubs</div>
+              </div>
+              <button class="airline-action-btn" onclick="startBookingFlow('Turkish Airlines', 'TK 198', '$720')" aria-label="Explore Turkish Airlines">
+                ↗
+              </button>
+            </div>
+          </div>
+
+          <!-- Airline Card 2: Emirates (Elevated Focus State) -->
+          <div class="airline-card featured-elevated">
+            <div class="airline-photo-wrap">
+              <img src="assets/images/plane_sky.jpg" alt="Emirates A380 flagship airliner" loading="lazy">
+              <div class="airline-floating-badge">PREMIER PARTNER · ★ 4.95</div>
+            </div>
+            <div class="airline-info-bar">
+              <div>
+                <h3 class="airline-name">EMIRATES</h3>
+                <div class="airline-subtag">Fly Better · Private Suites & Lounge</div>
+              </div>
+              <button class="airline-action-btn" onclick="startBookingFlow('Emirates', 'EK 319', '$840')" aria-label="Explore Emirates">
+                ↗
+              </button>
+            </div>
+          </div>
+
+          <!-- Airline Card 3: Qatar Airways -->
+          <div class="airline-card">
+            <div class="airline-photo-wrap">
+              <img src="assets/images/qatar_airways.jpg" alt="Qatar Airways airliner soaring over clouds" loading="lazy">
+              <div class="airline-floating-badge">★ 4.9 Rating</div>
+            </div>
+            <div class="airline-info-bar">
+              <div>
+                <h3 class="airline-name">QATAR AIRWAYS</h3>
+                <div class="airline-subtag">World's Best Airline · Qsuite</div>
+              </div>
+              <button class="airline-action-btn" onclick="startBookingFlow('Qatar Airways', 'QR 805', '$790')" aria-label="Explore Qatar Airways">
+                ↗
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION: PLAN YOUR TRAVEL WITH CONFIDENCE (COLLAGE SECTION)
+         ========================================================================== -->
+    <section class="support-section" id="support">
+      <div class="container">
+        <div class="support-grid">
+          <div class="support-content">
+            <div class="section-eyebrow">
+              <span class="dot"></span>
+              <span>TRAVEL SUPPORT</span>
+            </div>
+            <h2 class="section-title">PLAN YOUR TRAVEL WITH CONFIDENCE</h2>
+            <p class="section-subtitle">
+              Find help with your bookings and travel plans, and see what to expect along every step of your journey.
+            </p>
+
+            <div class="feature-list">
+              <div class="feature-item">
+                <div class="feature-num-badge">01</div>
+                <div>
+                  <h3>Travel requirements for Dubai & 190+ Destinations</h3>
+                  <p>Up-to-the-minute visa guidelines, automated passport validity checks, and direct border clearance information updated daily.</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-num-badge">02</div>
+                <div>
+                  <h3>Multi-risk travel insurance</h3>
+                  <p>Comprehensive protection against cancellations, emergency medical treatment abroad, missed flight transfers, and baggage loss protection.</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-num-badge">03</div>
+                <div>
+                  <h3>24/7 Priority flight concierge</h3>
+                  <p>Dedicated personal aviation advisors available instantly via WhatsApp, live chat, or private phone line for seamless re-bookings.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Signature Overlapping Stadium Pill Collage -->
+          <div class="capsule-collage-wrap">
+            <div class="floating-trust-pill">
+              <span class="trust-stars">★★★★★</span>
+              <div>
+                <div style="font-size: 0.85rem; font-weight: 800; color: var(--text-main);">4.95 / 5 TrustScore</div>
+                <small style="color: var(--text-muted); font-size: 0.72rem;">Verified by 120,000+ Flyers</small>
+              </div>
+            </div>
+
+            <div class="capsule-pill capsule-1">
+              <img src="assets/images/airplane_wing_sunset.jpg" alt="Airplane wing cruising through golden sunset clouds" loading="lazy">
+            </div>
+
+            <div class="capsule-pill capsule-2">
+              <img src="assets/images/jet_engine.jpg" alt="Turbine jet engine closeup in warm daylight" loading="lazy">
+            </div>
+
+            <div class="capsule-pill capsule-3">
+              <img src="assets/images/aerial_island.jpg" alt="Tropical coral reef and turquoise ocean aerial view" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+       SECTION: TRAVEL TO MAKE MEMORIES (3 VALUE PILLARS)
+       ========================================================================== -->
+    <section class="memories-section">
+      <div class="container">
+        <div class="center-header">
+          <div class="section-eyebrow">
+            <span class="dot"></span>
+            <span>EFFORTLESS VOYAGES</span>
+          </div>
+          <h2 class="section-title">TRAVEL TO MAKE MEMORIES ALL AROUND THE WORLD</h2>
+          <p class="section-subtitle">
+            Smart, thoughtful engineering designed to make your journey calm, predictable, and delightfully luxurious.
+          </p>
+        </div>
+
+        <div class="memories-grid">
+          <div class="memory-card">
+            <div class="memory-icon-wrap">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                <polyline points="10 9 12 11 16 7"></polyline>
+              </svg>
+            </div>
+            <h3>Book & Relax</h3>
+            <p>Complete your booking in under 60 seconds with instant e-ticket issuance, zero hidden fees, and transparent pricing.</p>
+          </div>
+
+          <div class="memory-card">
+            <div class="memory-icon-wrap">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                <path d="m9 14 2 2 4-4"></path>
+              </svg>
+            </div>
+            <h3>Smart Checklist</h3>
+            <p>Live terminal gate change alerts, luggage carousel notifications, and curated destination checklists customized for your trip.</p>
+          </div>
+
+          <div class="memory-card">
+            <div class="memory-icon-wrap">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+            </div>
+            <h3>Save More</h3>
+            <p>Earn 5% Flivain Miles on every booking and unlock secret private fares negotiated directly with top airline alliances.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+       SECTION: BOOK YOUR HOTEL (LUXURY STAYS)
+       ========================================================================== -->
+    <section class="hotels-section" id="hotels">
+      <div class="container">
+        <div class="center-header">
+          <div class="section-eyebrow">
+            <span class="dot"></span>
+            <span>HANDPICKED STAYS</span>
+          </div>
+          <h2 class="section-title">BOOK YOUR HOTEL</h2>
+          <p class="section-subtitle">
+            The world's leading stays offer top-notch hospitality, architectural elegance, and memorable views.
+          </p>
+        </div>
+
+        <div class="hotels-grid">
+          <!-- Hotel 1: Moxy NYC -->
+          <div class="hotel-card">
+            <div class="hotel-img-wrap">
+              <img src="assets/images/hotel_moxy.jpg" alt="Moxy NYC Downtown modern boutique hotel" loading="lazy">
+              <button class="hotel-heart-btn" onclick="toggleFavorite(this, 'Moxy NYC Downtown')" aria-label="Add to Favorites">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </button>
+              <div class="hotel-rating-badge">
+                <span class="star">★</span> 4.9 (420 reviews)
+              </div>
+            </div>
+            <div class="hotel-info-body">
+              <div class="hotel-location">New York City, USA</div>
+              <h3 class="hotel-title">Moxy NYC Downtown</h3>
+              <div class="hotel-amenities">
+                <span class="amenity-pill">Rooftop Lounge</span>
+                <span class="amenity-pill">City Skyline</span>
+                <span class="amenity-pill">Free High-Speed WiFi</span>
+              </div>
+              <div class="hotel-bottom-bar">
+                <div class="hotel-price">
+                  <span class="dyn-price" data-usd="280">$280</span> <span>/ night</span>
+                </div>
+                <button class="btn-book-room" onclick="bookStayDirect('Moxy NYC Downtown', '$280', 'New York City')">Book Stay</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hotel 2: Hotel Tropical Daisy -->
+          <div class="hotel-card">
+            <div class="hotel-img-wrap">
+              <img src="assets/images/hotel_tropical.jpg" alt="Hotel Tropical Daisy luxury villa in Bali" loading="lazy">
+              <button class="hotel-heart-btn" onclick="toggleFavorite(this, 'Hotel Tropical Daisy')" aria-label="Add to Favorites">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </button>
+              <div class="hotel-rating-badge">
+                <span class="star">★</span> 4.95 (850 reviews)
+              </div>
+            </div>
+            <div class="hotel-info-body">
+              <div class="hotel-location">Bali, Indonesia</div>
+              <h3 class="hotel-title">Hotel Tropical Daisy Villa</h3>
+              <div class="hotel-amenities">
+                <span class="amenity-pill">Infinity Pool</span>
+                <span class="amenity-pill">Private Beach</span>
+                <span class="amenity-pill">Organic Breakfast</span>
+              </div>
+              <div class="hotel-bottom-bar">
+                <div class="hotel-price">
+                  <span class="dyn-price" data-usd="195">$195</span> <span>/ night</span>
+                </div>
+                <button class="btn-book-room" onclick="bookStayDirect('Hotel Tropical Daisy Villa', '$195', 'Bali')">Book Stay</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hotel 3: Azure Horizon Santorini -->
+          <div class="hotel-card">
+            <div class="hotel-img-wrap">
+              <img src="assets/images/hotel_santorini.jpg" alt="Azure Horizon Cliff Suites Santorini" loading="lazy">
+              <button class="hotel-heart-btn" onclick="toggleFavorite(this, 'Azure Horizon Cliff Suites')" aria-label="Add to Favorites">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </button>
+              <div class="hotel-rating-badge">
+                <span class="star">★</span> 5.0 (610 reviews)
+              </div>
+            </div>
+            <div class="hotel-info-body">
+              <div class="hotel-location">Santorini, Greece</div>
+              <h3 class="hotel-title">Azure Horizon Cliff Suites</h3>
+              <div class="hotel-amenities">
+                <span class="amenity-pill">Caldera Sunset</span>
+                <span class="amenity-pill">Heated Jacuzzi</span>
+                <span class="amenity-pill">Butler Service</span>
+              </div>
+              <div class="hotel-bottom-bar">
+                <div class="hotel-price">
+                  <span class="dyn-price" data-usd="450">$450</span> <span>/ night</span>
+                </div>
+                <button class="btn-book-room" onclick="bookStayDirect('Azure Horizon Cliff Suites', '$450', 'Santorini')">Book Stay</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+       SECTION: TOP DESTINATIONS OF THE MONTH
+       ========================================================================== -->
+    <section class="destinations-section" id="destinations">
+      <div class="container">
+        <div class="center-header">
+          <div class="section-eyebrow">
+            <span class="dot"></span>
+            <span>POPULAR ESCAPES</span>
+          </div>
+          <h2 class="section-title">BEST DESTINATIONS OF THE MONTH</h2>
+          <p class="section-subtitle">
+            Curated flight departures at guaranteed lowest rates this season.
+          </p>
+        </div>
+
+        <div class="destinations-row">
+          <!-- Dubai -->
+          <div class="destination-pill-card" onclick="quickSetRoute('Tokyo, Japan', 'HND', 'Dubai, UAE', 'DXB')">
+            <div class="destination-avatar">
+              <img src="assets/images/dest_dubai.jpg" alt="Dubai skyline" loading="lazy">
+            </div>
+            <div class="dest-name">Dubai</div>
+            <div class="dest-price">From <span class="dyn-price" data-usd="520">$520</span></div>
+            <div class="dest-tag">Sunny · 31°C</div>
+          </div>
+
+          <!-- Tokyo -->
+          <div class="destination-pill-card" onclick="quickSetRoute('Berlin, Germany', 'BER', 'Tokyo, Japan', 'HND')">
+            <div class="destination-avatar">
+              <img src="assets/images/dest_tokyo.jpg" alt="Tokyo cityscape" loading="lazy">
+            </div>
+            <div class="dest-name">Tokyo</div>
+            <div class="dest-price">From <span class="dyn-price" data-usd="680">$680</span></div>
+            <div class="dest-tag">Autumn · 22°C</div>
+          </div>
+
+          <!-- Paris -->
+          <div class="destination-pill-card" onclick="quickSetRoute('New York, USA', 'JFK', 'Paris, France', 'CDG')">
+            <div class="destination-avatar">
+              <img src="assets/images/dest_paris.jpg" alt="Paris Eiffel Tower" loading="lazy">
+            </div>
+            <div class="dest-name">Paris</div>
+            <div class="dest-price">From <span class="dyn-price" data-usd="440">$440</span></div>
+            <div class="dest-tag">Mild · 18°C</div>
+          </div>
+
+          <!-- New York -->
+          <div class="destination-pill-card" onclick="quickSetRoute('London, UK', 'LHR', 'New York, USA', 'JFK')">
+            <div class="destination-avatar">
+              <img src="assets/images/dest_nyc.jpg" alt="New York Manhattan" loading="lazy">
+            </div>
+            <div class="dest-name">New York</div>
+            <div class="dest-price">From <span class="dyn-price" data-usd="390">$390</span></div>
+            <div class="dest-tag">Brisk · 16°C</div>
+          </div>
+
+          <!-- Maldives -->
+          <div class="destination-pill-card" onclick="quickSetRoute('Dubai, UAE', 'DXB', 'Maldives', 'MLE')">
+            <div class="destination-avatar">
+              <img src="assets/images/dest_maldives.jpg" alt="Maldives tropical beach" loading="lazy">
+            </div>
+            <div class="dest-name">Maldives</div>
+            <div class="dest-price">From <span class="dyn-price" data-usd="790">$790</span></div>
+            <div class="dest-tag">Tropical · 29°C</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+       SECTION: NEWSLETTER SUBSCRIPTION (STADIUM BANNER)
+       ========================================================================== -->
+    <section class="newsletter-section">
+      <div class="container">
+        <div class="newsletter-stadium-box">
+          <h2 class="newsletter-title">Subscribe Newsletter & get latest News</h2>
+          <p class="newsletter-subtitle">
+            Join 120,000+ discerning travelers. Get weekly secret fares, airline upgrade alerts, and luxury guides delivered to your inbox.
+          </p>
+
+          <form class="newsletter-form" id="newsletterForm" onsubmit="handleNewsletterSubmit(event)">
+            <input type="email" class="newsletter-input" placeholder="Your email address (e.g. alex@example.com)" required>
+            <button type="submit" class="btn-newsletter-submit">Subscribe Now</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       MULTI-COLUMN FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-logo">
+            <div class="brand-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"/>
+              </svg>
+            </div>
+            <span>Flivain<span class="dot">.</span></span>
+          </div>
+          <p>
+            Award-winning airline booking portal providing seamless travel experiences across 500+ global airlines with guaranteed price protection.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">About Us</h4>
+          <ul class="footer-links-list">
+            <li class="footer-link-item"><a href="#">Our Vision</a></li>
+            <li class="footer-link-item"><a href="#">Aviation Fleet</a></li>
+            <li class="footer-link-item"><a href="#">Careers</a></li>
+            <li class="footer-link-item"><a href="#">Press & News</a></li>
+            <li class="footer-link-item"><a href="#">Investor Relations</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Experience</h4>
+          <ul class="footer-links-list">
+            <li class="footer-link-item"><a href="#">First & Business Suites</a></li>
+            <li class="footer-link-item"><a href="#">VIP Airport Lounges</a></li>
+            <li class="footer-link-item"><a href="#">In-flight Dining</a></li>
+            <li class="footer-link-item"><a href="#">Baggage Butler</a></li>
+            <li class="footer-link-item"><a href="#">Carbon Offsetting</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Where We Fly</h4>
+          <ul class="footer-links-list">
+            <li class="footer-link-item"><a href="#">Middle East & Gulf</a></li>
+            <li class="footer-link-item"><a href="#">European Gateways</a></li>
+            <li class="footer-link-item"><a href="#">Asia & Pacific Hubs</a></li>
+            <li class="footer-link-item"><a href="#">North America</a></li>
+            <li class="footer-link-item"><a href="#">Island Retreats</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Support</h4>
+          <ul class="footer-links-list">
+            <li class="footer-link-item"><a href="#">Help & FAQs</a></li>
+            <li class="footer-link-item"><a href="#">Flight Status</a></li>
+            <li class="footer-link-item"><a href="#">Refund Policy</a></li>
+            <li class="footer-link-item"><a href="#">Privacy Charter</a></li>
+            <li class="footer-link-item"><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-row">
+        <div>
+          © 2026 Flivain AeroAgency Inc. All rights reserved. Crafted with precision for luxury aviation.
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div class="system-status-pill">
+            <span class="status-dot"></span>
+            <span>API Server & reservations.json Active</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MODAL 1: FLIGHT RESULTS SELECTION
+       ========================================================================== -->
+  <div class="flight-modal-overlay" id="flightModalOverlay" role="dialog" aria-modal="true">
+    <div class="flight-modal-container">
+      <button class="modal-close-btn" id="closeFlightModalBtn" aria-label="Close Modal">✕</button>
+      
+      <div class="flight-results-header">
+        <div class="section-eyebrow">
+          <span class="dot"></span>
+          <span>AVAILABLE ITINERARIES</span>
+        </div>
+        <h2 style="font-size: 1.8rem; font-weight: 800; letter-spacing: -0.03em;" id="modalRouteTitle">
+          Tokyo (HND) ➔ Berlin (BER)
+        </h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.35rem;" id="modalRouteSub">
+          Showing top-rated flights · Guaranteed lowest price
+        </p>
+      </div>
+
+      <!-- Itinerary 1: Emirates EK 319 -->
+      <div class="flight-itinerary-card">
+        <div class="airline-brand-tag">
+          <div class="brand-icon" style="background: #1E40AF; width: 34px; height: 34px;">✈</div>
+          <div>
+            <div style="font-weight: 800; font-size: 0.95rem;">Emirates</div>
+            <span class="airline-code-pill">EK 319 · A380</span>
+          </div>
+        </div>
+
+        <div class="flight-timeline">
+          <div class="time-block">
+            <div class="time">08:20</div>
+            <div class="city-code">HND (Tokyo)</div>
+          </div>
+          <div class="route-graphic">
+            <span class="route-duration">13h 40m · Non-stop</span>
+            <div class="route-line"></div>
+          </div>
+          <div class="time-block">
+            <div class="time">16:00</div>
+            <div class="city-code">BER (Berlin)</div>
+          </div>
+        </div>
+
+        <div class="flight-pricing-action">
+          <div class="flight-price-val"><span class="dyn-price" data-usd="840">$840</span></div>
+          <button class="btn-select-flight" onclick="startBookingFlow('Emirates', 'EK 319', '$840')">Select Flight</button>
+        </div>
+      </div>
+
+      <!-- Itinerary 2: Qatar Airways QR 805 -->
+      <div class="flight-itinerary-card">
+        <div class="airline-brand-tag">
+          <div class="brand-icon" style="background: #800020; width: 34px; height: 34px;">✈</div>
+          <div>
+            <div style="font-weight: 800; font-size: 0.95rem;">Qatar Airways</div>
+            <span class="airline-code-pill">QR 805 · B787</span>
+          </div>
+        </div>
+
+        <div class="flight-timeline">
+          <div class="time-block">
+            <div class="time">11:45</div>
+            <div class="city-code">HND (Tokyo)</div>
+          </div>
+          <div class="route-graphic">
+            <span class="route-duration">14h 15m · 1 Stop (DOH)</span>
+            <div class="route-line"></div>
+          </div>
+          <div class="time-block">
+            <div class="time">20:00</div>
+            <div class="city-code">BER (Berlin)</div>
+          </div>
+        </div>
+
+        <div class="flight-pricing-action">
+          <div class="flight-price-val"><span class="dyn-price" data-usd="790">$790</span></div>
+          <button class="btn-select-flight" onclick="startBookingFlow('Qatar Airways', 'QR 805', '$790')">Select Flight</button>
+        </div>
+      </div>
+
+      <!-- Itinerary 3: Turkish Airlines TK 198 -->
+      <div class="flight-itinerary-card">
+        <div class="airline-brand-tag">
+          <div class="brand-icon" style="background: #E30A17; width: 34px; height: 34px;">✈</div>
+          <div>
+            <div style="font-weight: 800; font-size: 0.95rem;">Turkish Airlines</div>
+            <span class="airline-code-pill">TK 198 · A350</span>
+          </div>
+        </div>
+
+        <div class="flight-timeline">
+          <div class="time-block">
+            <div class="time">22:15</div>
+            <div class="city-code">HND (Tokyo)</div>
+          </div>
+          <div class="route-graphic">
+            <span class="route-duration">14h 50m · 1 Stop (IST)</span>
+            <div class="route-line"></div>
+          </div>
+          <div class="time-block">
+            <div class="time">07:05 (+1)</div>
+            <div class="city-code">BER (Berlin)</div>
+          </div>
+        </div>
+
+        <div class="flight-pricing-action">
+          <div class="flight-price-val"><span class="dyn-price" data-usd="720">$720</span></div>
+          <button class="btn-select-flight" onclick="startBookingFlow('Turkish Airlines', 'TK 198', '$720')">Select Flight</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: CHECKOUT & PASSENGER DETAILS FORM (MOCK API SENDER)
+       ========================================================================== -->
+  <div class="flight-modal-overlay" id="checkoutModalOverlay" role="dialog" aria-modal="true">
+    <div class="checkout-modal-container">
+      <button class="modal-close-btn" id="closeCheckoutModalBtn" aria-label="Close Checkout">✕</button>
+      
+      <div class="section-eyebrow">
+        <span class="dot"></span>
+        <span>FINAL STEP</span>
+      </div>
+      <h2 style="font-size: 1.65rem; font-weight: 800; letter-spacing: -0.03em;">Confirm Reservation</h2>
+      <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 0.25rem;">
+        Complete passenger info to record your booking into <code style="color: var(--brand-primary); font-weight: 700;">reservations.json</code>.
+      </p>
+
+      <div class="booking-summary-pill">
+        <div class="summary-row">
+          <span style="color: var(--text-muted);">Flight / Service:</span>
+          <strong id="chkSummaryAirline">Emirates EK 319</strong>
+        </div>
+        <div class="summary-row">
+          <span style="color: var(--text-muted);">Route:</span>
+          <strong id="chkSummaryRoute">Tokyo [HND] ➔ Berlin [BER]</strong>
+        </div>
+        <div class="summary-row">
+          <span style="color: var(--text-muted);">Dates:</span>
+          <span id="chkSummaryDates">Oct 18, 2026 - Dec 15, 2026</span>
+        </div>
+        <div class="summary-row">
+          <span style="color: var(--text-muted);">Travelers:</span>
+          <span id="chkSummaryTravelers">1 Adult, Economy</span>
+        </div>
+        <div class="summary-row">
+          <span style="font-weight: 800; color: var(--text-main);">Total Fare:</span>
+          <span style="font-size: 1.25rem; font-weight: 800; color: var(--brand-primary);" id="chkSummaryPrice">$840</span>
+        </div>
+      </div>
+
+      <form id="checkoutForm" onsubmit="handleReservationSubmit(event)">
+        <div class="form-group">
+          <label class="form-label" for="passengerNameInput">Full Passenger Name</label>
+          <input type="text" id="passengerNameInput" class="form-input-text" required value="Alexander Wright" placeholder="e.g. Alexander Wright">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="passengerEmailInput">Contact Email Address</label>
+          <input type="email" id="passengerEmailInput" class="form-input-text" required value="alex.wright@traveler.com" placeholder="e.g. alex@example.com">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Seat Preference</label>
+            <select class="form-input-text" id="seatPrefInput">
+              <option>Window Seat (12A)</option>
+              <option>Aisle Seat (12C)</option>
+              <option>Extra Legroom (04B)</option>
+              <option>Private Suite</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Meal Option</label>
+            <select class="form-input-text" id="mealPrefInput">
+              <option>Standard Gourmet</option>
+              <option>Vegetarian / Vegan</option>
+              <option>Halal Certified</option>
+              <option>Gluten-Free</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-confirm-booking" id="confirmBookingBtn">
+          <span>Confirm & Save to reservations.json</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 3: CONFIRMATION & BOARDING PASS MODAL
+       ========================================================================== -->
+  <div class="flight-modal-overlay" id="successModalOverlay" role="dialog" aria-modal="true">
+    <div class="checkout-modal-container">
+      <button class="modal-close-btn" id="closeSuccessModalBtn" aria-label="Close Ticket">✕</button>
+      
+      <div style="text-align: center;">
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: #ECFDF5; color: #10B981; display: inline-flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 0.75rem;">
+          ✓
+        </div>
+        <h2 style="font-size: 1.65rem; font-weight: 800; letter-spacing: -0.03em;">Booking Confirmed!</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+          Your reservation was written directly to <strong style="color: var(--brand-primary);">reservations.json</strong>.
+        </p>
+      </div>
+
+      <div class="boarding-pass-card">
+        <div class="pass-header">
+          <div>
+            <div style="font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Aero Ticket Pass</div>
+            <div style="font-size: 1.15rem; font-weight: 800; color: var(--brand-primary);" id="passAirline">Emirates EK 319</div>
+          </div>
+          <div>
+            <div class="pnr-badge" id="passPnr">FLV-8942A</div>
+          </div>
+        </div>
+
+        <div class="pass-grid">
+          <div>
+            <div class="pass-field-label">Passenger</div>
+            <div class="pass-field-val" id="passName">Alexander Wright</div>
+          </div>
+          <div>
+            <div class="pass-field-label">Status</div>
+            <div class="pass-field-val" style="color: #10B981;">Confirmed ✓</div>
+          </div>
+          <div>
+            <div class="pass-field-label">Departure</div>
+            <div class="pass-field-val" id="passDepDate">Oct 18, 2026</div>
+          </div>
+          <div>
+            <div class="pass-field-label">Route</div>
+            <div class="pass-field-val" id="passRoute">HND ➔ BER</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem;">
+        <button class="btn-dark-pill" style="flex: 1; justify-content: center;" onclick="downloadReservationsJSON()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>Download reservations.json</span>
+        </button>
+        <button class="btn-bookings-pill" style="flex: 1; justify-content: center;" onclick="openBookingsDrawer(); closeSuccessModal();">
+          <span>View All Bookings</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       DRAWER: MY BOOKINGS (LIVE RESERVATIONS.JSON VIEWER)
+       ========================================================================== -->
+  <div class="bookings-drawer-overlay" id="bookingsDrawerOverlay">
+    <div class="bookings-drawer-panel">
+      <div class="drawer-top-bar">
+        <div>
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--text-main);">My Reservations</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Synced with <code style="color: var(--brand-primary);">reservations.json</code></p>
+        </div>
+        <button class="modal-close-btn" id="closeBookingsDrawerBtn" style="position: static;">✕</button>
+      </div>
+
+      <div id="bookingsListContainer" style="flex: 1; overflow-y: auto;">
+        <!-- Dynamically rendered booking items -->
+      </div>
+
+      <div style="padding-top: 1.25rem; border-top: 1px solid var(--border-subtle); display: flex; gap: 0.5rem;">
+        <button class="btn-dark-pill" style="flex: 1; justify-content: center;" onclick="downloadReservationsJSON()">
+          Download JSON
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ==========================================================================
+       VANILLA JAVASCRIPT MICRO-INTERACTIONS & MOCK API CLIENT
+       ========================================================================== -->
+  <script>
+    // State
+    const currencies = [
+      { code: 'USD', symbol: '$', rate: 1.0 },
+      { code: 'EUR', symbol: '€', rate: 0.92 },
+      { code: 'GBP', symbol: '£', rate: 0.78 },
+      { code: 'JPY', symbol: '¥', rate: 155.0 }
+    ];
+    let currentCurrencyIdx = 0;
+    let currentBookingDraft = {};
+    let localReservations = [];
+
+    // Elements
+    const currencyToggleBtn = document.getElementById('currencyToggleBtn');
+    const currentCurrencySpan = document.getElementById('currentCurrency');
+    const swapAirportsBtn = document.getElementById('swapAirportsBtn');
+    const searchFlightsBtn = document.getElementById('searchFlightsBtn');
+    
+    // Modals
+    const flightModalOverlay = document.getElementById('flightModalOverlay');
+    const closeFlightModalBtn = document.getElementById('closeFlightModalBtn');
+    const checkoutModalOverlay = document.getElementById('checkoutModalOverlay');
+    const closeCheckoutModalBtn = document.getElementById('closeCheckoutModalBtn');
+    const successModalOverlay = document.getElementById('successModalOverlay');
+    const closeSuccessModalBtn = document.getElementById('closeSuccessModalBtn');
+    const bookingsDrawerOverlay = document.getElementById('bookingsDrawerOverlay');
+    const openBookingsDrawerBtn = document.getElementById('openBookingsDrawerBtn');
+    const closeBookingsDrawerBtn = document.getElementById('closeBookingsDrawerBtn');
+
+    // Inputs
+    const originCity = document.getElementById('originCity');
+    const originCode = document.getElementById('originCode');
+    const destCity = document.getElementById('destCity');
+    const destCode = document.getElementById('destCode');
+    const depDateVal = document.getElementById('depDateVal');
+    const retDateVal = document.getElementById('retDateVal');
+    const travelersVal = document.getElementById('travelersVal');
+    const navBookingsBadge = document.getElementById('navBookingsBadge');
+
+    // Segmented pills
+    const tripBtns = document.querySelectorAll('.seg-btn');
+    const classBtns = document.querySelectorAll('.class-btn');
+    const retDateCell = document.getElementById('retDateCell');
+
+    let adultCount = 1;
+    let childCount = 0;
+    let selectedClass = 'Economy';
+
+    // 1. Initial Load: Fetch reservations from Mock API or LocalStorage
+    async function loadReservations() {
+      try {
+        const res = await fetch('/api/reservations');
+        if (res.ok) {
+          const json = await res.json();
+          localReservations = json.reservations || [];
+        } else {
+          loadFromLocalStorage();
+        }
+      } catch (err) {
+        // Fallback for file:// or static server without python backend
+        loadFromLocalStorage();
+      }
+      updateBookingsUI();
+    }
+
+    function loadFromLocalStorage() {
+      const stored = localStorage.getItem('flivain_reservations');
+      if (stored) {
+        try { localReservations = JSON.parse(stored); } catch (e) {}
+      } else {
+        localReservations = [{
+          id: "res_demo_001",
+          pnr: "FLV-8942A",
+          type: "flight",
+          airline: "Emirates",
+          flightNumber: "EK 319",
+          origin: "Tokyo, Japan [HND]",
+          destination: "Berlin, Germany [BER]",
+          departureDate: "Oct 18, 2026",
+          returnDate: "Dec 15, 2026",
+          travelers: "1 Adult, Economy",
+          passengerName: "Alexander Wright",
+          passengerEmail: "alex.wright@traveler.com",
+          price: "$840",
+          status: "Confirmed",
+          createdAt: new Date().toISOString()
+        }];
+        localStorage.setItem('flivain_reservations', JSON.stringify(localReservations));
+      }
+    }
+
+    function updateBookingsUI() {
+      navBookingsBadge.textContent = localReservations.length;
+      const container = document.getElementById('bookingsListContainer');
+      if (!container) return;
+
+      if (localReservations.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 2rem;">No reservations found.</p>';
+        return;
+      }
+
+      container.innerHTML = localReservations.map(r => `
+        <div class="booking-history-item">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+            <div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: var(--brand-primary);">${r.airline} ${r.flightNumber || ''}</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);">${r.origin} ➔ ${r.destination}</div>
+            </div>
+            <span class="pnr-badge" style="font-size: 0.8rem; padding: 0.2rem 0.6rem;">${r.pnr}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-main); margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px dashed var(--border-subtle);">
+            <span>${r.passengerName} (${r.departureDate})</span>
+            <strong style="color: var(--brand-primary);">${r.price}</strong>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 2. Booking Flow: Step 1 -> Step 2
+    function startBookingFlow(airline, flightNumber, price) {
+      closeFlightResults();
+      currentBookingDraft = {
+        type: 'flight',
+        airline: airline,
+        flightNumber: flightNumber,
+        origin: `${originCity.textContent} [${originCode.textContent}]`,
+        destination: `${destCity.textContent} [${destCode.textContent}]`,
+        departureDate: depDateVal.textContent,
+        returnDate: retDateVal.textContent,
+        travelers: travelersVal.textContent,
+        price: price
+      };
+
+      document.getElementById('chkSummaryAirline').textContent = `${airline} ${flightNumber}`;
+      document.getElementById('chkSummaryRoute').textContent = `${currentBookingDraft.origin} ➔ ${currentBookingDraft.destination}`;
+      document.getElementById('chkSummaryDates').textContent = `${currentBookingDraft.departureDate} - ${currentBookingDraft.returnDate}`;
+      document.getElementById('chkSummaryTravelers').textContent = currentBookingDraft.travelers;
+      document.getElementById('chkSummaryPrice').textContent = price;
+
+      checkoutModalOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function bookStayDirect(hotelName, price, location) {
+      startBookingFlow('Luxury Stay: ' + hotelName, 'Resort Booking', price);
+    }
+
+    // 3. Step 2 -> Step 3: Mock API Reservation POST
+    async function handleReservationSubmit(e) {
+      e.preventDefault();
+      const passengerName = document.getElementById('passengerNameInput').value.trim();
+      const passengerEmail = document.getElementById('passengerEmailInput').value.trim();
+
+      const reservationPayload = {
+        ...currentBookingDraft,
+        passengerName: passengerName,
+        passengerEmail: passengerEmail,
+        seatPreference: document.getElementById('seatPrefInput').value,
+        mealPreference: document.getElementById('mealPrefInput').value
+      };
+
+      let savedRecord = null;
+
+      try {
+        const response = await fetch('/api/reservations', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(reservationPayload)
+        });
+
+        if (response.ok) {
+          const resData = await response.json();
+          savedRecord = resData.reservation;
+          showToast(`🎉 Saved to reservations.json (PNR: ${savedRecord.pnr})`);
+        }
+      } catch (err) {
+        console.warn('Backend offline or static file. Using local store simulation.');
+      }
+
+      // If backend was not reached, simulate locally and update store
+      if (!savedRecord) {
+        const randomPnr = 'FLV-' + Math.random().toString(36).substring(2, 7).toUpperCase();
+        savedRecord = {
+          id: 'res_' + Date.now(),
+          pnr: randomPnr,
+          ...reservationPayload,
+          status: 'Confirmed',
+          createdAt: new Date().toISOString()
+        };
+        showToast(`🎉 Reservation confirmed (PNR: ${savedRecord.pnr})`);
+      }
+
+      localReservations.unshift(savedRecord);
+      localStorage.setItem('flivain_reservations', JSON.stringify(localReservations));
+      updateBookingsUI();
+
+      // Close checkout and show boarding pass
+      checkoutModalOverlay.classList.remove('active');
+      showSuccessPass(savedRecord);
+    }
+
+    function showSuccessPass(record) {
+      document.getElementById('passAirline').textContent = `${record.airline} ${record.flightNumber || ''}`;
+      document.getElementById('passPnr').textContent = record.pnr;
+      document.getElementById('passName').textContent = record.passengerName;
+      document.getElementById('passDepDate').textContent = record.departureDate;
+      document.getElementById('passRoute').textContent = `${record.origin} ➔ ${record.destination}`;
+
+      successModalOverlay.classList.add('active');
+    }
+
+    function closeSuccessModal() {
+      successModalOverlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // 4. Download reservations.json helper
+    function downloadReservationsJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(localReservations, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "reservations.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast("💾 Exported reservations.json successfully!");
+    }
+
+    // 5. Drawer controllers
+    function openBookingsDrawer() {
+      updateBookingsUI();
+      bookingsDrawerOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeBookingsDrawer() {
+      bookingsDrawerOverlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    openBookingsDrawerBtn.addEventListener('click', openBookingsDrawer);
+    closeBookingsDrawerBtn.addEventListener('click', closeBookingsDrawer);
+    bookingsDrawerOverlay.addEventListener('click', (e) => {
+      if (e.target === bookingsDrawerOverlay) closeBookingsDrawer();
+    });
+
+    closeCheckoutModalBtn.addEventListener('click', () => {
+      checkoutModalOverlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+
+    closeSuccessModalBtn.addEventListener('click', closeSuccessModal);
+
+    // Currency Switcher
+    currencyToggleBtn.addEventListener('click', () => {
+      currentCurrencyIdx = (currentCurrencyIdx + 1) % currencies.length;
+      const curr = currencies[currentCurrencyIdx];
+      currentCurrencySpan.textContent = `${curr.code} (${curr.symbol})`;
+      
+      document.querySelectorAll('.dyn-price').forEach(el => {
+        const usdVal = parseFloat(el.getAttribute('data-usd'));
+        if (!isNaN(usdVal)) {
+          const converted = Math.round(usdVal * curr.rate);
+          el.textContent = `${curr.symbol}${converted.toLocaleString()}`;
+        }
+      });
+      showToast(`Currency updated to ${curr.code}`);
+    });
+
+    // Trip Type Selector
+    tripBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tripBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        
+        const type = btn.getAttribute('data-trip');
+        if (type === 'oneway') {
+          retDateCell.style.opacity = '0.4';
+          retDateCell.style.pointerEvents = 'none';
+          document.getElementById('retDateSub').textContent = 'No return needed';
+        } else {
+          retDateCell.style.opacity = '1';
+          retDateCell.style.pointerEvents = 'auto';
+          document.getElementById('retDateSub').textContent = 'Tuesday · Flexible return';
+        }
+      });
+    });
+
+    // Cabin Class Selector
+    classBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        classBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedClass = btn.getAttribute('data-class');
+        updateTravelerDisplay();
+      });
+    });
+
+    // Swap Origin and Destination
+    swapAirportsBtn.addEventListener('click', () => {
+      const tempCity = originCity.textContent;
+      const tempCode = originCode.textContent;
+
+      originCity.textContent = destCity.textContent;
+      originCode.textContent = destCode.textContent;
+
+      destCity.textContent = tempCity;
+      destCode.textContent = tempCode;
+
+      showToast(`Route flipped: ${originCity.textContent} ➔ ${destCity.textContent}`);
+    });
+
+    // Popover Toggles
+    const originCell = document.getElementById('originCell');
+    const originPopover = document.getElementById('originPopover');
+    const destCell = document.getElementById('destCell');
+    const destPopover = document.getElementById('destPopover');
+    const travelersCell = document.getElementById('travelersCell');
+    const travelersPopover = document.getElementById('travelersPopover');
+
+    function closeAllPopovers() {
+      originPopover.classList.remove('open');
+      destPopover.classList.remove('open');
+      travelersPopover.classList.remove('open');
+    }
+
+    originCell.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = originPopover.classList.contains('open');
+      closeAllPopovers();
+      if (!isOpen) originPopover.classList.add('open');
+    });
+
+    destCell.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = destPopover.classList.contains('open');
+      closeAllPopovers();
+      if (!isOpen) destPopover.classList.add('open');
+    });
+
+    travelersCell.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = travelersPopover.classList.contains('open');
+      closeAllPopovers();
+      if (!isOpen) travelersPopover.classList.add('open');
+    });
+
+    document.addEventListener('click', () => closeAllPopovers());
+    originPopover.addEventListener('click', e => e.stopPropagation());
+    destPopover.addEventListener('click', e => e.stopPropagation());
+    travelersPopover.addEventListener('click', e => e.stopPropagation());
+
+    originPopover.querySelectorAll('.airport-item').forEach(item => {
+      item.addEventListener('click', () => {
+        originCity.textContent = item.getAttribute('data-city');
+        originCode.textContent = item.getAttribute('data-code');
+        originPopover.classList.remove('open');
+      });
+    });
+
+    destPopover.querySelectorAll('.airport-item').forEach(item => {
+      item.addEventListener('click', () => {
+        destCity.textContent = item.getAttribute('data-city');
+        destCode.textContent = item.getAttribute('data-code');
+        destPopover.classList.remove('open');
+      });
+    });
+
+    // Travelers Stepper logic
+    document.getElementById('adultInc').addEventListener('click', () => {
+      if (adultCount < 9) adultCount++;
+      document.getElementById('adultCount').textContent = adultCount;
+      updateTravelerDisplay();
+    });
+    document.getElementById('adultDec').addEventListener('click', () => {
+      if (adultCount > 1) adultCount--;
+      document.getElementById('adultCount').textContent = adultCount;
+      updateTravelerDisplay();
+    });
+
+    document.getElementById('childInc').addEventListener('click', () => {
+      if (childCount < 8) childCount++;
+      document.getElementById('childCount').textContent = childCount;
+      updateTravelerDisplay();
+    });
+    document.getElementById('childDec').addEventListener('click', () => {
+      if (childCount > 0) childCount--;
+      document.getElementById('childCount').textContent = childCount;
+      updateTravelerDisplay();
+    });
+
+    function updateTravelerDisplay() {
+      const total = adultCount + childCount;
+      travelersVal.textContent = `${total} Traveler${total > 1 ? 's' : ''}, ${selectedClass}`;
+    }
+
+    function quickSetRoute(oCity, oCode, dCity, dCode) {
+      originCity.textContent = oCity;
+      originCode.textContent = oCode;
+      destCity.textContent = dCity;
+      destCode.textContent = dCode;
+      showToast(`Selected route: ${oCity} ➔ ${dCity}`);
+      document.getElementById('searchWidget').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function openFlightResults() {
+      document.getElementById('modalRouteTitle').textContent = 
+        `${originCity.textContent} [${originCode.textContent}] ➔ ${destCity.textContent} [${destCode.textContent}]`;
+      flightModalOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeFlightResults() {
+      flightModalOverlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    searchFlightsBtn.addEventListener('click', openFlightResults);
+    closeFlightModalBtn.addEventListener('click', closeFlightResults);
+    flightModalOverlay.addEventListener('click', (e) => {
+      if (e.target === flightModalOverlay) closeFlightResults();
+    });
+
+    function toggleFavorite(btn, hotelName) {
+      btn.classList.toggle('liked');
+      if (btn.classList.contains('liked')) {
+        showToast(`❤️ Saved ${hotelName} to favorites!`);
+      } else {
+        showToast(`Removed ${hotelName} from favorites`);
+      }
+    }
+
+    function handleNewsletterSubmit(e) {
+      e.preventDefault();
+      const input = e.target.querySelector('input');
+      showToast(`✨ Subscribed ${input.value} to VIP Travel Deals!`);
+      input.value = '';
+    }
+
+    function showToast(message) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-pill';
+      toast.innerHTML = `<span>✈</span> <span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.transition = 'all 0.3s ease';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(15px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // Load initial data on page boot
+    document.addEventListener('DOMContentLoaded', loadReservations);
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+[
+  {
+    "id": "res_7a27c921",
+    "pnr": "FLV-830B4",
+    "type": "flight",
+    "airline": "Qatar Airways",
+    "flightNumber": "QR 805",
+    "origin": "Tokyo [HND]",
+    "destination": "Berlin [BER]",
+    "departureDate": "Oct 18, 2026",
+    "returnDate": "Dec 15, 2026",
+    "travelers": "1 Adult, Economy",
+    "passengerName": "Elena Rostova",
+    "passengerEmail": "elena@traveler.com",
+    "price": "",
+    "status": "Confirmed",
+    "createdAt": "2026-09-14T19:04:03.586715Z"
+  },
+  {
+    "id": "res_demo_001",
+    "pnr": "FLV-8942A",
+    "type": "flight",
+    "airline": "Emirates",
+    "flightNumber": "EK 319",
+    "origin": "Tokyo, Japan [HND]",
+    "destination": "Berlin, Germany [BER]",
+    "departureDate": "Oct 18, 2026",
+    "returnDate": "Dec 15, 2026",
+    "travelers": "1 Adult, Economy",
+    "passengerName": "Alexander Wright",
+    "passengerEmail": "alex.wright@traveler.com",
+    "price": "$840",
+    "status": "Confirmed",
+    "createdAt": "2026-09-14T20:30:00Z"
+  }
+]
